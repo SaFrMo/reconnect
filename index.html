@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Reconnect</title>
+        <style type="text/css">
+            body {
+                font-family: Helvetica, sans-serif;
+            }
+            header {
+                text-align: center;
+            }
+            main {
+                display: flex;
+                justify-content: space-around;
+            }
+            .dat-url {
+                padding: 50px;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <header>
+            <h1>Reconnect</h1>
+            <p>Easily pull changes from one Dat app to another</p>
+        </header>
+
+        <main>
+
+            <div class="source dat-url">
+                <input type="text" id="source"/>
+                <button onclick="selectSource()">Select Source</button>
+            </div>
+
+            <div class="target dat-url">
+                <input type="text" id="target"/>
+                <button onclick="selectTarget()">Select Target</button>
+            </div>
+
+        </main>
+
+        <script src="/lib/updateDiff.js"></script>
+        <script source="text/javascript">
+            let sourceUrl, targetUrl
+
+            async function selectSource(){
+                const source = await DatArchive.selectArchive({
+                    title: 'Choose the source of the changes',
+                    buttonLabel: 'Use this source'
+                })
+                if( source ){
+                    sourceUrl = document.getElementById('source').value = source.url
+                }
+
+                if( sourceUrl && targetUrl ){
+                    updateDiff(sourceUrl, targetUrl)
+                }
+            }
+
+            async function selectTarget(){
+                const target = await DatArchive.selectArchive({
+                    title: 'Choose where to apply the changes',
+                    buttonLabel: 'Use this target',
+                    filters: { isOwner: true }
+                })
+                if( target ){
+                    targetUrl = document.getElementById('target').value = target.url
+                }
+
+                if( sourceUrl && targetUrl ){
+                    updateDiff(sourceUrl, targetUrl)
+                }
+            }
+
+        </script>
+
+    </body>
+</html>
