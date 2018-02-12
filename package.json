@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "pauls-dat-api": "^5.2.0",
     "vue": "^2.5.13"
   }
 }

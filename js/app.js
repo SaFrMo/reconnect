@@ -3,7 +3,8 @@ new Vue({
     data: {
         sourceUrl: '',
         targetUrl: '',
-        sourceForkUrl: ''
+        sourceForkUrl: '',
+        diff: null
     },
     methods: {
         async selectSource(){
@@ -12,15 +13,12 @@ new Vue({
                 buttonLabel: 'Use this source'
             })
             if( source ){
-                const info = await source.getInfo()
-
                 this.sourceUrl = source.url
-
             }
 
-            // if( sourceUrl && targetUrl ){
-            //     updateDiff(sourceUrl, targetUrl)
-            // }
+            if( sourceUrl && targetUrl ){
+                this.updateDiff(sourceUrl, targetUrl)
+            }
         },
 
         async selectTarget(){
@@ -33,9 +31,13 @@ new Vue({
                 this.targetUrl = target.url
             }
 
-            // if( sourceUrl && targetUrl ){
-            //     updateDiff(sourceUrl, targetUrl)
-            // }
+            if( sourceUrl && targetUrl ){
+                this.updateDiff(sourceUrl, targetUrl)
+            }
+        },
+
+        updateDiff(){
+
         }
     }
 })
