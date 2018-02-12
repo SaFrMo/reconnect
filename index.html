@@ -22,59 +22,31 @@
 
     <body>
 
-        <header>
-            <h1>Reconnect</h1>
-            <p>Easily pull changes from one Dat app to another</p>
-        </header>
+        <div id="app">
 
-        <main>
+            <header>
+                <h1>Reconnect</h1>
+                <p>Easily pull changes from one Dat app to another</p>
+            </header>
 
-            <div class="source dat-url">
-                <input type="text" id="source"/>
-                <button onclick="selectSource()">Select Source</button>
-            </div>
+            <main>
 
-            <div class="target dat-url">
-                <input type="text" id="target"/>
-                <button onclick="selectTarget()">Select Target</button>
-            </div>
+                <div class="source dat-url">
+                    <input v-model="sourceUrl" type="text" id="source"/>
+                    <button @click="selectSource">Select Source</button>
+                </div>
 
-        </main>
+                <div class="target dat-url">
+                    <input v-model="targetUrl" type="text" id="target"/>
+                    <button @="selectTarget">Select Target</button>
+                </div>
 
-        <script src="/lib/updateDiff.js"></script>
-        <script source="text/javascript">
-            let sourceUrl, targetUrl
+            </main>
 
-            async function selectSource(){
-                const source = await DatArchive.selectArchive({
-                    title: 'Choose the source of the changes',
-                    buttonLabel: 'Use this source'
-                })
-                if( source ){
-                    sourceUrl = document.getElementById('source').value = source.url
-                }
+        </div>
 
-                if( sourceUrl && targetUrl ){
-                    updateDiff(sourceUrl, targetUrl)
-                }
-            }
-
-            async function selectTarget(){
-                const target = await DatArchive.selectArchive({
-                    title: 'Choose where to apply the changes',
-                    buttonLabel: 'Use this target',
-                    filters: { isOwner: true }
-                })
-                if( target ){
-                    targetUrl = document.getElementById('target').value = target.url
-                }
-
-                if( sourceUrl && targetUrl ){
-                    updateDiff(sourceUrl, targetUrl)
-                }
-            }
-
-        </script>
+        <script src="/node_modules/vue/dist/vue.js"></script>
+        <script src="/js/app.js"></script>
 
     </body>
 </html>
